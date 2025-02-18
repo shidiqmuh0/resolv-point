@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function fetchAddressPoints(address) {
         try {
-            const response = await fetch(`/api/points/${encodeURIComponent(address)}`);
+            const response = await fetch(`/api/points$address=${encodeURIComponent(address)}`);
             const data = await response.json();
 
             if (!response.ok) {
