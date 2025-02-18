@@ -1,14 +1,12 @@
-from flask import Flask, jsonify, request
-from flask_cors import CORS
+import json
 import logging
 import requests
 from web3 import Web3
 
-app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "*"}})
+# Konfigurasi logging
 logging.basicConfig(level=logging.DEBUG)
 
-# Initialize Web3 with public Ethereum RPC
+# Inisialisasi Web3 dengan Ethereum RPC publik
 w3 = Web3(Web3.HTTPProvider('https://ethereum.publicnode.com'))
 
 def resolve_ens(name):
@@ -19,40 +17,54 @@ def resolve_ens(name):
             if address is None:
                 raise ValueError(f'ENS name {name} not found')
             return address
-        return name  # Return as-is if it's not an ENS name
+        return name  # Kembalikan apa adanya jika bukan ENS name
     except Exception as e:
+        logging.error(f'Error resolving ENS name {name}: {str(e)}')
         return None
 
 def handler(event, context):
-    """Vercel serverless function handler."""
+    """
+    Vercel serverless function handler.
+    Pastikan parameter 'address' dikirim melalui query string.
+    """
+    # Ambil parameter address dari query string
     address = event.get("queryStringParameters", {}).get("address", "")
     if not address:
         return {
             "statusCode": 400,
-            "body": jsonify({"error": "Address is required"})
+            "headers": {"Content-Type": "application/json"},
+            "body": json.dumps({"error": "Address is required"})
         }
     
+    # Resolusi ENS (jika diperlukan)
     resolved_address = resolve_ens(address)
     if not resolved_address:
         return {
             "statusCode": 400,
-            "body": jsonify({"error": "Invalid ENS name"})
+            "headers": {"Content-Type": "application/json"},
+            "body": json.dumps({"error": "Invalid ENS name"})
         }
 
     try:
+        # Panggil API Resolv.im dengan address yang telah di-resolve
         response = requests.get(
-            f'https://api.resolv.im/points',
-            params={'address': resolved_address, 'mock': 'false'},
-            headers={'Accept': 'application/json'}
+            "https://api.resolv.im/points",
+            params={"address": resolved_address, "mock": "false"},
+            headers={"Accept": "application/json"}
         )
-
         response.raise_for_status()
         return {
             "statusCode": 200,
-            "body": response.json()
+            "headers": {"Content-Type": "application/json"},
+            "body": json.dumps(response.json())
         }
     except requests.RequestException as e:
+        logging.error(f'Error fetching points: {str(e)}')
         return {
             "statusCode": 500,
-            "body": jsonify({"error": "Failed to fetch data", "details": str(e)})
+            "headers": {"Content-Type": "application/json"},
+            "body": json.dumps({
+                "error": "Failed to fetch data from Resolv.im",
+                "details": str(e)
+            })
         }
