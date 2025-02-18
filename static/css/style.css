@@ -1,0 +1,164 @@
+/* Card and container styles */
+.card {
+    backdrop-filter: blur(10px);
+    transition: transform 0.2s;
+    border: 1px solid var(--bs-border-color);
+}
+
+.card:hover {
+    transform: translateY(-2px);
+}
+
+/* Form elements */
+textarea {
+    font-family: monospace;
+    resize: vertical;
+    background-color: var(--bs-dark) !important;
+    color: var(--bs-light) !important;
+    border: 1px solid var(--bs-border-color);
+}
+
+textarea:focus {
+    border-color: var(--bs-primary);
+    box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.25);
+}
+
+/* Results styling */
+.result {
+    margin-top: 2rem;
+    animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Loading animation */
+.spinner-grow {
+    width: 3rem;
+    height: 3rem;
+}
+
+/* Alert styling */
+.alert {
+    border-radius: 0.5rem;
+}
+
+.alert-info {
+    background-color: rgba(var(--bs-info-rgb), 0.15);
+    border-color: rgba(var(--bs-info-rgb), 0.3);
+    color: rgba(var(--bs-light-rgb), 0.9);
+}
+
+.alert-info strong {
+    color: var(--bs-info);
+}
+
+.alert-info small {
+    color: rgba(var(--bs-light-rgb), 0.7);
+}
+
+.alert-info i {
+    color: var(--bs-info);
+}
+
+
+/* Results cards */
+.result-card {
+    background: var(--bs-dark);
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    padding: 1.5rem;
+}
+
+.stats-card {
+    background: rgba(var(--bs-dark-rgb), 0.5);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* Points display */
+.points-value {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--bs-primary);
+}
+
+/* Boost badges */
+.boost-badge {
+    background: rgba(var(--bs-primary-rgb), 0.1);
+    color: var(--bs-primary);
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.875rem;
+}
+
+/* Error states */
+.error-message {
+    color: var(--bs-danger);
+    background-color: rgba(var(--bs-danger-rgb), 0.1);
+    border: 1px solid rgba(var(--bs-danger-rgb), 0.2);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-top: 1rem;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bs-dark);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--bs-primary);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--bs-primary-dark);
+}
+
+.json-content {
+    background-color: var(--bs-dark);
+    border-radius: 0.375rem;
+    padding: 1rem;
+    margin: 0;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-family: monospace;
+    font-size: 0.875rem;
+    color: var(--bs-light);
+}
+
+pre {
+    background-color: var(--bs-dark);
+    border-radius: 0.375rem;
+    padding: 1rem;
+    margin: 0;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}

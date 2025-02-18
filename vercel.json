@@ -1,0 +1,11 @@
+{
+    "version": 2,
+    "builds": [
+      { "src": "api/points.py", "use": "@vercel/python" },
+      { "src": "app.py", "use": "@vercel/python" }
+    ],
+    "routes": [
+      { "src": "/api/points", "dest": "/api/points.py" },
+      { "src": "/(.*)", "dest": "/app.py" }
+    ]
+  }
