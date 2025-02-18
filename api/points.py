@@ -47,7 +47,7 @@ def get_points(address):
 
         # Call Resolv.im API with resolved address
         response = requests.get(
-            f'https://api.resolv.im/points',
+            f'https://api.resolv.im/points/',
             params={'address': resolved_address, 'mock': 'false'},
             headers={'Accept': 'application/json'}
         )
